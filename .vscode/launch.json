@@ -10,7 +10,9 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
-            "args": ["-n", "RealESRGAN_x2plus", "-i", "inputs", "--output", "./results/no_face_enhance_x2_r", "-s", "2"]
+            "justMyCode": false,
+            // "args": ["-n", "RealESRGAN_x2plus", "-i", "inputs", "--output", "./results/no_face_enhance_x2_r", "-s", "2"],
+            "args":["-opt", "options/train_realesrnet_x1plus_yh.yml", "--debug"]
         }
     ]
 }

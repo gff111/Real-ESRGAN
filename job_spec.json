@@ -1,0 +1,15 @@
+{
+    "instances": [
+      {
+        "instance_count": 1,
+        "resources": [
+          {"name": "cpus", "type": "SCALAR", "scalar": {"value": 64.0}},
+          {"name": "mem", "type": "SCALAR", "scalar": {"value": 100000.0}},
+          {"name": "disk", "type": "SCALAR", "scalar": {"value": 50.0}},
+          {"name": "gpus", "type": "SCALAR", "scalar": {"value": 8.0}}
+          ]
+      }],
+    "image": "docker-registry.qiyi.virtual/jarvis-public/nvidia-pytorch-1.10-py38:v1.0",
+    "cluster_name": "jarvis-gpu-hb4-t02-v100"
+  }
+  

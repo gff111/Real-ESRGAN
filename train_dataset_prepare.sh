@@ -1,0 +1,4 @@
+# python scripts/generate_multiscale_DF2K.py --input /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr --output /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_multiscale
+# python scripts/extract_subimages.py --input /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_multiscale --output /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_multiscale_sub --crop_size 400 --step 200
+# python scripts/extract_subimages.py --input /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr --output /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_sub --crop_size 400 --step 200
+python scripts/generate_meta_info.py --input /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_sub /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/hr_multiscale_sub --root /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset --meta_info /mnt/ec-data2/ivs/1080p/zyh/df2k_ost_dataset/meta_info_DF2K_OSTmultiscale_sub_and_DF2K_OST_sub.txt

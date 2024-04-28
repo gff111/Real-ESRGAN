@@ -1,0 +1,1 @@
+python pytorch2onnx.py --input /data/yh/SR2023/Real-ESRGAN/experiments/train_RealESRNetx2plus_1000k_B12G4/models/net_g_890000.pth --output /data/yh/SR2023/Real-ESRGAN/experiments/train_RealESRNetx2plus_1000k_B12G4/onnx/net_g_890000.onnx --use_fp16 --dynamic_axes

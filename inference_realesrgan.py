@@ -51,7 +51,7 @@ def main():
         help='Image extension. Options: auto | jpg | png, auto means using the same extension as inputs')
     parser.add_argument(
         '-g', '--gpu-id', type=int, default=None, help='gpu device to use (default=None) can be 0,1,2 for multi-gpu')
-
+    parser.add_argument('--out_16bit', action='store_true', help='Output 16-bit instead of 8-bit')
     args = parser.parse_args()
 
     # determine models according to model names
@@ -86,6 +86,9 @@ def main():
     elif args.model_name == "RealESRGAN_x1plus":
         model = RRDBNet(num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=1)
         netscale = 1
+    out_range = 255
+    if args.out_16bit:
+        out_range = 65535
 
     # determine model paths
     if args.model_path is not None:
@@ -121,7 +124,8 @@ def main():
     if args.face_enhance:  # Use GFPGAN for face enhancement
         from gfpgan import GFPGANer
         face_enhancer = GFPGANer(
-            model_path='https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.3.pth',
+            # model_path='https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.3.pth',
+            model_path='https://github.com/TencentARC/GFPGAN/releases/download/v1.3.0/GFPGANv1.4.pth',
             upscale=args.outscale,
             arch='clean',
             channel_multiplier=2,
@@ -147,7 +151,7 @@ def main():
             if args.face_enhance:
                 _, _, output = face_enhancer.enhance(img, has_aligned=False, only_center_face=False, paste_back=True)
             else:
-                output, _ = upsampler.enhance(img, outscale=args.outscale)
+                output, _ = upsampler.enhance(img, outscale=args.outscale, out_range=out_range)
         except RuntimeError as error:
             print('Error', error)
             print('If you encounter CUDA out of memory, try to set --tile with a smaller number.')

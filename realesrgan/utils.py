@@ -191,7 +191,7 @@ class RealESRGANer():
         return self.output
 
     @torch.no_grad()
-    def enhance(self, img, outscale=None, alpha_upsampler='realesrgan'):
+    def enhance(self, img, outscale=None, alpha_upsampler='realesrgan', out_range=255):
         h_input, w_input = img.shape[0:2]
         # img: numpy
         img = img.astype(np.float32)
@@ -248,7 +248,7 @@ class RealESRGANer():
             output_img[:, :, 3] = output_alpha
 
         # ------------------------------ return ------------------------------ #
-        if max_range == 65535:  # 16-bit image
+        if max_range == 65535 or out_range == 65535:  # 16-bit image
             output = (output_img * 65535.0).round().astype(np.uint16)
         else:
             output = (output_img * 255.0).round().astype(np.uint8)

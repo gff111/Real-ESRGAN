@@ -7,7 +7,7 @@ from PIL import Image
 def main(args):
     # For DF2K, we consider the following three scales,
     # and the smallest image whose shortest edge is 400
-    scale_list = [0.75, 0.5, 1 / 3]
+    scale_list = [0.5]
     shortest_edge = 512
 
     path_list = sorted(glob.glob(os.path.join(args.input, '*')))

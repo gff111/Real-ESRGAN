@@ -64,7 +64,10 @@ def extract_subimages(opt):
     pbar = tqdm(total=len(img_list), unit='image', desc='Extract')
     pool = Pool(opt['n_thread'])
     for path in img_list:
-        pool.apply_async(worker, args=(path, opt), callback=lambda arg: pbar.update(1))
+        try:
+            pool.apply_async(worker, args=(path, opt), callback=lambda arg: pbar.update(1))
+        except:
+            continue
     pool.close()
     pool.join()
     pbar.close()

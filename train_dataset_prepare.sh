@@ -53,7 +53,7 @@ fi
 
 # 步骤1: 生成多尺度数据集
 echo "步骤1: 生成多尺度数据集..."
-python scripts/generate_multiscale_DF2K.py --input "$original_dataset_path" --output "$multiscale_path"
+python scripts/generate_multiscale_DF2K.py --input "$original_dataset_path" --output "$multiscale_path" --n_thread 16
 
 # 检查步骤1是否成功
 if [ $? -ne 0 ]; then

@@ -56,7 +56,7 @@ def extract_subimages(opt):
         print(f'mkdir {save_folder} ...')
     else:
         print(f'Folder {save_folder} already exists. Exit.')
-        sys.exit(1)
+        # sys.exit(1)
 
     # scan all images
     img_list = list(scandir(input_folder, full_path=True))

@@ -4,7 +4,8 @@
 dataset_root="/root/paddlejob/workspace/env_run/zhuyinghao/datasets/dataset_lite"
 
 # 定义要处理的数据集名称列表
-datasets=("aigc_ocr_part1_img" "tusou_es_clarity_gt_0_9" "Flickr2K_HR" "DIV2K_train_HR" "52mm" "sa_text_high")
+# datasets=("aigc_ocr_part1_img" "tusou_es_clarity_gt_0_9" "Flickr2K_HR" "DIV2K_train_HR" "52mm" "sa_text_high")
+datasets=("poster_text_images_high")
 
 echo "开始批量提取子图像..."
 echo "数据集根目录: $dataset_root"

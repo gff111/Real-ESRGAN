@@ -224,7 +224,7 @@ def main():
 
     # 裁剪或填充到指定大小
     h, w = img.shape[0:2]
-    crop_pad_size = config['datasets']['train'].get('gt_size', 256)
+    crop_pad_size = config['datasets']['train'].get('gt_size', 512)
 
     # 填充
     if h < crop_pad_size or w < crop_pad_size:

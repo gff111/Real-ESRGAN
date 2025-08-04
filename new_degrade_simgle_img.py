@@ -93,9 +93,16 @@ def apply_degradation(img, config, kernels, device='cuda'):
     jpeger = DiffJPEG(differentiable=False).to(device)
     usm_sharpener = USMSharp().to(device)
 
+    # 确保图像数值范围在0-1之间
+    if img.max() > 1.0:
+        img = img / 255.0
+    img = np.clip(img, 0, 1)
+
     # 转换为tensor并移到设备
     img_tensor = img2tensor([img], bgr2rgb=True, float32=True)[0].unsqueeze(0).to(device)
     kernel1, kernel2, sinc_kernel = [k.to(device) for k in kernels]
+
+    print(f"输入Tensor形状: {img_tensor.shape}, 数值范围: [{img_tensor.min():.3f}, {img_tensor.max():.3f}]")
 
     # USM锐化
     img_usm = usm_sharpener(img_tensor)
@@ -192,6 +199,8 @@ def apply_degradation(img, config, kernels, device='cuda'):
     # 裁剪和四舍五入
     out = torch.clamp((out * 255.0).round(), 0, 255) / 255.
 
+    print(f"输出Tensor数值范围: [{out.min():.3f}, {out.max():.3f}]")
+
     return out.squeeze(0)
 
 
@@ -219,6 +228,12 @@ def main():
     if img is None:
         raise ValueError(f"无法读取图像: {args.input}")
 
+    # 打印原始图像信息用于调试
+    print(f"原始图像形状: {img.shape}, 数据类型: {img.dtype}, 数值范围: [{img.min()}, {img.max()}]")
+
+    # 确保图像数据类型正确
+    img = img.astype(np.float32)
+
     # 数据增强
     img = augment(img, config['datasets']['train']['use_hflip'], config['datasets']['train']['use_rot'])
 
@@ -238,6 +253,9 @@ def main():
         top = random.randint(0, h - crop_pad_size)
         left = random.randint(0, w - crop_pad_size)
         img = img[top:top + crop_pad_size, left:left + crop_pad_size, ...]
+
+    # 检查裁剪/填充后的图像
+    print(f"处理后图像形状: {img.shape}, 数值范围: [{img.min()}, {img.max()}]")
 
     # 生成退化核
     kernels = generate_kernels(config)
@@ -259,11 +277,21 @@ def main():
     comparison_path = args.output.replace('.png', '_comparison.png').replace('.jpg', '_comparison.jpg')
     if comparison_path != args.output:
         # 创建对比图
-        h1, w1 = img.shape[:2]
+        h1, w1 = img.shape[:2] if len(img.shape) == 3 else (img.shape[0], img.shape[1])
         h2, w2 = degraded_img.shape[:2]
         max_h = max(h1, h2)
         comparison = np.zeros((max_h, w1 + w2, 3), dtype=np.uint8)
-        comparison[:h1, :w1] = img
+
+        # 确保原图是uint8类型
+        if img.dtype != np.uint8:
+            if img.max() <= 1.0:
+                orig_img_display = (img * 255).astype(np.uint8)
+            else:
+                orig_img_display = img.astype(np.uint8)
+        else:
+            orig_img_display = img
+
+        comparison[:h1, :w1] = orig_img_display
         comparison[:h2, w1:w1+w2] = degraded_img
         cv2.imwrite(comparison_path, comparison)
         print(f"对比图已保存到: {comparison_path}")
@@ -272,7 +300,7 @@ def main():
 if __name__ == '__main__':
     main()
 
-# python degrade_single_image.py \
+# python new_degrade_simgle_img.py \
 #     --config options/finetune_realesrgan_x4plus.yml \
 #     --input path/to/input/image.jpg \
 #     --output path/to/output/degraded_image.jpg \

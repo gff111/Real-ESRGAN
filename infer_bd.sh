@@ -17,19 +17,28 @@
 # done
 
 
-# yinghao20
-checkpoint=("5000" "10000" "20000" "25000")
+# # yinghao20
+# checkpoint=("5000" "10000" "20000" "25000")
+# for item in "${checkpoint[@]}"
+# do
+# ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_no_usm/models/net_g_${item}.pth
+# python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao20/yinghao20_${item}G --model_path $ori_weight --tile 512
+# done
+
+# # yinghao30
+
+# checkpoint=("5000" "10000" "20000")
+# for item in "${checkpoint[@]}"
+# do
+# ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade/models/net_g_${item}.pth
+# python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao30/yinghao30_${item}G --model_path $ori_weight --tile 512
+# done
+
+# yinghao40
+checkpoint=("5000" "10000" "20000" "30000")
 for item in "${checkpoint[@]}"
 do
-ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_no_usm/models/net_g_${item}.pth
-python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao20/yinghao20_${item}G --model_path $ori_weight --tile 512
+ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade_jpeg2_10_70/models/net_g_${item}.pth
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao40/yinghao40_${item}G --model_path $ori_weight --tile 512
 done
 
-# yinghao30
-
-checkpoint=("5000" "10000" "20000")
-for item in "${checkpoint[@]}"
-do
-ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade/models/net_g_${item}.pth
-python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao30/yinghao30_${item}G --model_path $ori_weight --tile 512
-done

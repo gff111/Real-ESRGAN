@@ -35,10 +35,17 @@
 # done
 
 # yinghao40
-checkpoint=("5000" "10000" "20000" "30000")
+# checkpoint=("5000" "10000" "20000" "30000")
+# for item in "${checkpoint[@]}"
+# do
+# ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade_jpeg2_10_70/models/net_g_${item}.pth
+# python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao40/yinghao40_${item}G --model_path $ori_weight --tile 512
+# done
+
+# yinghao50
+checkpoint=("5000" "10000" "15000")
 for item in "${checkpoint[@]}"
 do
-ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade_jpeg2_10_70/models/net_g_${item}.pth
-python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao40/yinghao40_${item}G --model_path $ori_weight --tile 512
+ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade_jpeg2_10_70_x2/models/net_g_${item}.pth
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/yinghao50/yinghao50_${item}G --model_path $ori_weight --tile 512
 done
-

@@ -11,8 +11,9 @@
 # python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_imgs --output ./results/general_x4_baidu --model_path weights/BAIDU_RealESRGAN_x4plus_v3.pth
 
 
-python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/test_set_sr_baidu_tile_512 --model_path weights/BAIDU_RealESRGAN_x4plus_v3.pth --tile 512
-python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/test_set_sr_origin_tile_512 --tile 512
+# python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/test_set_sr_baidu_tile_512 --model_path weights/BAIDU_RealESRGAN_x4plus_v3.pth --tile 512
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/origin_esrgan --model_path ./weights/RealESRGAN_x4plus.pth --tile 512
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/origin_esrnet --model_path ./weights/RealESRNet_x4plus.pth --tile 512
 
 # python inference_realesrgan.py -n RealESRGAN_x2plus -i /mnt/ec-data2/ivs/1080p/zyh/hdr_dirty_face/png/select --output ./results/dirty_face_enhance -s 2 --face_enhance
 # python inference_realesrgan.py -n RealESRGAN_x2plus -i /mnt/ec-data2/ivs/1080p/zyh/hdr_dirty_face/png/select --output ./results/dirty_face_enhance -s 2 --face_enhance

@@ -1,3 +1,44 @@
+# 1. 数据集准备
+```shell
+# 1. multi-scale and crop
+train_dataset_prepare.sh
+
+# 2. 生成 元数据文件
+sh gen_meta.sh
+```
+
+# 2. 训练
+
+```shell
+
+# 在options创建训练配置文件，训练时指定
+conda activate real-esrgan
+export CUDA_VISIBLE_DEVICES=5,6,7
+python -m torch.distributed.launch --nproc_per_node=3 --master_port=4322 realesrgan/train.py -opt options/finetune_realesrgan_x4plus_yh80.yml --launcher pytorch
+```
+
+# 3. 推理
+```shell
+conda activate real-esrgan
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output ./results/ --model_path ./weights/net_g_200000.pth --tile 512 --face_enhance
+```
+
+批量推理某次训练的若干个epoch
+
+```shell
+checkpoint=("300000" "350000" "400000")
+for item in "${checkpoint[@]}"
+do
+ori_weight=/root/paddlejob/workspace/env_run/zhuyinghao/Real-ESRGAN/experiments/finetune_RealESRGANx4plus_yh_30_online_degrade_jpeg2_10_70_no_g_noise_data_v30_only_word/models/net_g_${item}.pth
+python inference_realesrgan.py -n RealESRGAN_x4plus -i inputs/test_set_sr --output results/yinghao80/yinghao80_${item}G --model_path $ori_weight --tile 512
+done
+```
+
+
+
+
+
+
 <p align="center">
   <img src="assets/realesrgan_logo.png" height=120>
 </p>
